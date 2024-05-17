@@ -1,0 +1,63 @@
+// Step 1 & 2  testing
+console.log('Hello World!');
+
+//Step 3  Assign verbs , paths to the variables
+const serverVerbs = ["GET", "GET", "GET", "POST", "GET", "POST"];
+const serverPaths = ["/", "/about", "/contact", "/login", "/panel", "/logout"];
+const serverResponses = [
+  "Welcome to WEB700 Assignment 1",
+  "This assignment was prepared by Aniket Jadhav",
+  "Student Name: Aniket Jadhav Student Email: arjadhav@myseneca.ca",
+  "User Logged In",
+  "Main Panel",
+  "Logout Complete"
+];
+
+//Step 4 Matching the verbs with the paths
+function httpRequest(httpVerb, path) {
+    for (let i = 0; i < serverPaths.length; i++) {
+      if (serverVerbs[i] === httpVerb && serverPaths[i] === path) {
+        return `200: ${serverResponses[i]}`;
+      }
+    }
+    return `404: Unable to process ${httpVerb} request for ${path}`;
+  }
+  
+  //Step 5  Manual Test
+
+console.log(httpRequest("GET", "/")); 
+console.log(httpRequest("GET", "/about"));
+console.log(httpRequest("POST","/logout"));
+console.log(httpRequest("GET","/login"));
+console.log(httpRequest("PUT", "/"));
+
+
+
+//Step 6 automation testing
+ 
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * (max + 1));
+}
+
+//  automateTests function
+function automateTests() {
+  const testVerbs = ["GET", "POST"];
+  const testPaths = ["/", "/about", "/contact", "/login", "/panel", "/logout", "/randomPath1", "/randomPath2"];
+
+  function randomRequest() {
+    const randVerb = testVerbs[getRandomInt(1)];
+    const randPath = testPaths[getRandomInt(7)];
+    
+    //the random result 
+    const result = httpRequest(randVerb, randPath);
+    
+    //To show the output
+    console.log(result);
+  }
+
+  // one second interval
+  setInterval(randomRequest, 1000);
+}
+
+automateTests();
